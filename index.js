@@ -1,6 +1,17 @@
 const express = require('express');
 const knex = require('knex');
 const knexConfig = require('./knexfile');
+const cleaner = require("knex-cleaner")
+
+exports.seed = function(knex) {
+    return cleaner.clean(knex, {
+        mode: "delete",
+        ignoreTables: [
+            "knex_migrations",
+            "knex_migrations_lock",
+        ],
+    })
+}
 
 const db = knex(knexConfig.development);
 
